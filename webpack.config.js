@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 const path = require("path");
 /* Adds index.html to build dir */
 const HtmlWebpackPlugin = require("html-webpack-plugin");

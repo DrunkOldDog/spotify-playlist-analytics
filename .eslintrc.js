@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 module.exports = {
   env: {
     browser: true,
@@ -15,4 +17,10 @@ module.exports = {
   rules: {
     "react/react-in-jsx-scope": "off",
   },
+  overrides: [
+    {
+      files: ["*.test.js", "*.test.jsx"],
+      env: { jest: true },
+    },
+  ],
 };
