@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { Navbar } from ".";
 
 describe("Navbar component", () => {
@@ -12,8 +13,10 @@ describe("Navbar component", () => {
     expect(screen.getByRole("img")).toBeInTheDocument();
   });
 
-  test("should contain a login button", () => {
+  test("should display user avatar when login button is pressed", () => {
     render(<Navbar />);
-    expect(screen.getByRole("button")).toBeInTheDocument();
+    const loginButton = screen.getByRole("button");
+    userEvent.click(loginButton);
+    expect(screen.getByRole("button")).toBeEmptyDOMElement();
   });
 });
