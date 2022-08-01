@@ -30,6 +30,7 @@ module.exports = {
     extensions: ["*", ".js", ".jsx"],
     alias: {
       "@components": path.resolve(__dirname, "src/components"),
+      "@layout": path.resolve(__dirname, "src/layout"),
     },
   },
   plugins: [

@@ -5,5 +5,6 @@ module.exports = {
   testEnvironment: "jsdom",
   moduleNameMapper: {
     "^@components(.*)$": "<rootDir>/src/components$1",
+    "^@layout(.*)$": "<rootDir>/src/layout$1",
   },
 };
