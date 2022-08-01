@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Box, Button, Container, Flex } from "@chakra-ui/react";
-import { Spotify } from "../../assets/icons";
+import { Spotify } from "@assets/icons";
 
 export const Navbar = () => {
   return (
@@ -12,7 +12,7 @@ export const Navbar = () => {
           height="100%"
         >
           <Spotify fill="#fff" height={{ sm: "26px", lg: "40px" }} />
-          <Button>Log In</Button>
+          <Button size={{ sm: "sm", lg: "md" }}>Log In</Button>
         </Flex>
       </Container>
     </NavigationBar>
