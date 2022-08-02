@@ -1,13 +1,16 @@
 import { ChakraProvider } from "@chakra-ui/react";
+import { SessionProvider } from "next-auth/react";
 import { Navbar } from "@layout/Navbar";
 import { theme } from "@common/theme";
 import PropTypes from "prop-types";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <ChakraProvider theme={theme}>
-      <Navbar />
-      <Component {...pageProps} />
+      <SessionProvider session={session}>
+        <Navbar />
+        <Component {...pageProps} />
+      </SessionProvider>
     </ChakraProvider>
   );
 }
