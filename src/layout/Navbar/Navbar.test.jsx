@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Navbar } from ".";
 
@@ -13,10 +13,12 @@ describe("Navbar component", () => {
     expect(screen.getByRole("img")).toBeInTheDocument();
   });
 
-  test("should display user avatar when login button is pressed", () => {
+  test("should display user avatar when login button is pressed", async () => {
     render(<Navbar />);
-    const loginButton = screen.getByRole("button");
+    const loginButton = screen.getByRole("button", { name: /log in/i });
     userEvent.click(loginButton);
-    expect(screen.getByRole("button")).toBeEmptyDOMElement();
+    await waitFor(() =>
+      expect(screen.queryByRole("button", { name: /log in/i })).toBeNull()
+    );
   });
 });
