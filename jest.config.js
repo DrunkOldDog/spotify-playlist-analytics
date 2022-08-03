@@ -14,6 +14,7 @@ const customJestConfig = {
     "^@common(.*)$": "<rootDir>/src/common$1",
     "^@components(.*)$": "<rootDir>/src/components$1",
     "^@layout(.*)$": "<rootDir>/src/layout$1",
+    "^@lib(.*)$": "<rootDir>/src/lib$1",
   },
 };
 

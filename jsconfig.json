@@ -5,7 +5,8 @@
       "@assets/*": ["assets/*"],
       "@common/*": ["common/*"],
       "@components/*": ["components/*"],
-      "@layout/*": ["layout/*"]
+      "@layout/*": ["layout/*"],
+      "@lib/*": ["lib/*"]
     }
   }
 }
