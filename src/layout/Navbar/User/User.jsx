@@ -12,40 +12,39 @@ import {
 } from "@chakra-ui/react";
 import { CaretDown } from "@assets/icons";
 import styled from "@emotion/styled";
+import { GlobalPropTypes } from "@common/constants";
 
-export const User = ({ onLogout }) => {
-  return (
-    <Menu>
-      <StyledMenuButton>
-        <Wrap align={"center"}>
+export const User = ({ user, onLogout }) => (
+  <Menu>
+    <StyledMenuButton>
+      <Wrap align={"center"}>
+        <WrapItem>
+          <Avatar
+            name={user.name}
+            src={user.image}
+            size={{ sm: "sm", lg: "md" }}
+          />
+        </WrapItem>
+        <Hide below="lg">
           <WrapItem>
-            <Avatar
-              name="Dan Abrahmov"
-              src="https://bit.ly/dan-abramov"
-              size={{ sm: "sm", lg: "md" }}
-            />
+            <Text fontWeight={"bold"} transition="200ms">
+              Profile
+            </Text>
           </WrapItem>
-          <Hide below="lg">
-            <WrapItem>
-              <Text fontWeight={"bold"} transition="200ms">
-                Profile
-              </Text>
-            </WrapItem>
-          </Hide>
+        </Hide>
 
-          <WrapItem>
-            <CaretDown mt={0.5} fill="#fff" />
-          </WrapItem>
-        </Wrap>
-      </StyledMenuButton>
-      <MenuList>
-        <MenuItem onClick={onLogout} fontWeight="bold">
-          Logout
-        </MenuItem>
-      </MenuList>
-    </Menu>
-  );
-};
+        <WrapItem>
+          <CaretDown mt={0.5} fill="#fff" />
+        </WrapItem>
+      </Wrap>
+    </StyledMenuButton>
+    <MenuList>
+      <MenuItem onClick={onLogout} fontWeight="bold">
+        Logout
+      </MenuItem>
+    </MenuList>
+  </Menu>
+);
 
 const StyledMenuButton = styled(MenuButton)`
   color: #fff;
@@ -63,5 +62,6 @@ const StyledMenuButton = styled(MenuButton)`
 `;
 
 User.propTypes = {
-  onLogout: PropTypes.func.isRequired,
+  user: GlobalPropTypes.user.isRequired,
+  onLogout: PropTypes.func,
 };

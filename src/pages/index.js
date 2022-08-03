@@ -1,10 +1,16 @@
 import { Container, Heading } from "@chakra-ui/react";
+import { Navbar } from "@layout/Navbar";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 function Home() {
+  const { data } = useSession();
   return (
-    <Container pt={10}>
-      <Heading as="h1">Guacho se viene con todo pa&apos;s</Heading>
-    </Container>
+    <>
+      <Navbar user={data?.user} signIn={signIn} signOut={signOut} />
+      <Container pt={10}>
+        <Heading as="h1">Guacho se viene con todo pa&apos;s</Heading>
+      </Container>
+    </>
   );
 }
 

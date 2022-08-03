@@ -1,20 +1,11 @@
-import { useState } from "react";
 import styled from "@emotion/styled";
 import { Box, Button, Container, Flex } from "@chakra-ui/react";
 import { Spotify } from "@assets/icons";
 import { User } from "./User";
+import { GlobalPropTypes } from "@common/constants";
+import PropTypes from "prop-types";
 
-export const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const onLogin = () => {
-    setIsLoggedIn(true);
-  };
-
-  const onLogout = () => {
-    setIsLoggedIn(false);
-  };
-
+export const Navbar = ({ user, signIn, signOut }) => {
   return (
     <NavigationBar height={{ sm: "54px", lg: "80px" }}>
       <Container height={"100%"}>
@@ -24,12 +15,15 @@ export const Navbar = () => {
           height="100%"
         >
           <Spotify fill="#fff" height={{ sm: "26px", lg: "40px" }} />
-          {!isLoggedIn ? (
-            <Button size={{ sm: "sm", lg: "md" }} onClick={onLogin}>
+          {!user ? (
+            <Button
+              size={{ sm: "sm", lg: "md" }}
+              onClick={() => signIn("spotify")}
+            >
               Log In
             </Button>
           ) : (
-            <User onLogout={onLogout} />
+            <User user={user} onLogout={signOut} />
           )}
         </Flex>
       </Container>
@@ -43,4 +37,10 @@ const NavigationBar = styled(Box)`
 
 NavigationBar.defaultProps = {
   as: "nav",
+};
+
+Navbar.propTypes = {
+  user: GlobalPropTypes.user,
+  signIn: PropTypes.func,
+  signOut: PropTypes.func,
 };

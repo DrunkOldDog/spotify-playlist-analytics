@@ -1,6 +1,9 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { Mocks } from "@common/constants";
 import { Navbar } from ".";
+
+const signIn = jest.fn();
 
 describe("Navbar component", () => {
   test("should render", () => {
@@ -13,12 +16,16 @@ describe("Navbar component", () => {
     expect(screen.getByRole("img")).toBeInTheDocument();
   });
 
-  test("should display user avatar when login button is pressed", async () => {
-    render(<Navbar />);
+  test("should call signIn method on button click", async () => {
+    render(<Navbar signIn={signIn} />);
     const loginButton = screen.getByRole("button", { name: /log in/i });
     userEvent.click(loginButton);
-    await waitFor(() =>
-      expect(screen.queryByRole("button", { name: /log in/i })).toBeNull()
-    );
+    await waitFor(() => expect(signIn).toBeCalledTimes(1));
+  });
+
+  test("should not display sign in button when user is logged in", () => {
+    render(<Navbar user={Mocks.user} />);
+    const loginButton = screen.queryByRole("button", { name: /log in/i });
+    expect(loginButton).toBeNull();
   });
 });
