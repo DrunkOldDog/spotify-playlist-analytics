@@ -6,7 +6,7 @@ const CLIENT_KEYS = Buffer.from(
 
 // FIXME: This is a temporary solution and haven't been tested
 export const refreshAccessToken = async (refresh_token) => {
-  const { data } = await postData(
+  return await postData(
     SERVER.SPOTIFY_TOKEN,
     new URLSearchParams({
       grant_type: "refresh_token",
@@ -19,13 +19,11 @@ export const refreshAccessToken = async (refresh_token) => {
       },
     }
   );
-
-  return data;
 };
 
 export const getPlaylists = async (accessToken) => {
   if (!accessToken) return [];
-  const { data } = await getData(SERVER.SPOTIFY_PLAYLISTS, {
+  const { data } = await getData(SERVER.SPOTIFY_PLAYLISTS + "?limit=40", {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

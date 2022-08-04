@@ -10,9 +10,16 @@ import {
 import { Navbar } from "@layout/Navbar";
 import { useSession, signIn, signOut, getSession } from "next-auth/react";
 import { getPlaylists } from "@lib/spotify";
+import { useMemo } from "react";
 
 function Home({ playlists }) {
   const { data } = useSession();
+
+  const userPlaylists = useMemo(() => {
+    if (!data?.user) return playlists;
+    return playlists.filter((playlist) => playlist.owner.id === data.user.id);
+  }, [playlists, data]);
+
   return (
     <>
       <Navbar user={data?.user} signIn={signIn} signOut={signOut} />
@@ -22,7 +29,7 @@ function Home({ playlists }) {
         </Heading>
 
         <SimpleGrid columns={[2, 2, 4]} gap={4}>
-          {playlists.map((playlist) => (
+          {userPlaylists.map((playlist) => (
             <Box
               key={playlist.id}
               maxW="xs"
@@ -67,7 +74,7 @@ Home.propTypes = {
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       description: PropTypes.string,
-      images: PropTypes.arrayOf({ url: PropTypes.string }),
+      images: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })),
     })
   ),
 };
