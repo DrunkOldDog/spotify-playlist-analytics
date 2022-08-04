@@ -8,6 +8,7 @@ import { GlobalPropTypes } from "@common/constants";
 import { PlaylistCard } from "@components/PlaylistCard";
 import { useRecoilState } from "recoil";
 import { playlistsState } from "@lib/recoil";
+import Link from "next/link";
 
 function Home({ playlists: initialPlaylists }) {
   const { data } = useSession();
@@ -35,7 +36,13 @@ function Home({ playlists: initialPlaylists }) {
         {userPlaylists.length ? (
           <SimpleGrid columns={[2, 2, 4]} gap={4}>
             {userPlaylists.map((playlist) => (
-              <PlaylistCard key={playlist.id} playlist={playlist} />
+              <Link
+                key={playlist.id}
+                href={`/playlist/${playlist.id}`}
+                passHref
+              >
+                <PlaylistCard playlist={playlist} />
+              </Link>
             ))}
           </SimpleGrid>
         ) : (
