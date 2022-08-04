@@ -23,11 +23,16 @@ export default NextAuth({
     async session({ session, token }) {
       session.user.id = token.id;
       session.accessToken = token.accessToken;
+      session.refreshToken = token.refreshToken;
       return session;
     },
     async jwt({ token, user, account }) {
       if (user) token.id = user.id;
-      if (account) token.accessToken = account.access_token;
+      if (account) {
+        token.accessToken = account.access_token;
+        token.refreshToken = account.refresh_token;
+      }
+
       return token;
     },
   },

@@ -39,7 +39,7 @@ function Home({ playlists }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
-  const playlists = await getPlaylists(session?.accessToken);
+  const playlists = await getPlaylists(session?.refreshToken);
   return { props: { playlists: playlists || [] } };
 }
 
