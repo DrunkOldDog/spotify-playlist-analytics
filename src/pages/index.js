@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { Container, Heading, SimpleGrid, Text } from "@chakra-ui/react";
-import { Navbar } from "@layout/Navbar";
-import { useSession, signIn, signOut, getSession } from "next-auth/react";
+import { useSession, getSession } from "next-auth/react";
 import { getPlaylists } from "@lib/spotify";
 import { useEffect, useMemo } from "react";
 import { GlobalPropTypes } from "@common/constants";
@@ -33,30 +32,23 @@ function Home({ playlists: initialPlaylists }) {
   }, [playlists, data]);
 
   return (
-    <>
-      <Navbar user={data?.user} signIn={signIn} signOut={signOut} />
-      <Container pt={10}>
-        <Heading as="h1" mb={8}>
-          Your playlists
-        </Heading>
+    <Container pt={8}>
+      <Heading as="h1" mb={8}>
+        Your playlists
+      </Heading>
 
-        {userPlaylists.length ? (
-          <SimpleGrid columns={[2, 2, 4]} gap={4}>
-            {userPlaylists.map((playlist) => (
-              <Link
-                key={playlist.id}
-                href={`/playlist/${playlist.id}`}
-                passHref
-              >
-                <PlaylistCard playlist={playlist} />
-              </Link>
-            ))}
-          </SimpleGrid>
-        ) : (
-          <Text>No playlists were found.</Text>
-        )}
-      </Container>
-    </>
+      {userPlaylists.length ? (
+        <SimpleGrid columns={[2, 2, 4]} gap={4}>
+          {userPlaylists.map((playlist) => (
+            <Link key={playlist.id} href={`/playlist/${playlist.id}`} passHref>
+              <PlaylistCard playlist={playlist} />
+            </Link>
+          ))}
+        </SimpleGrid>
+      ) : (
+        <Text>No playlists were found.</Text>
+      )}
+    </Container>
   );
 }
 

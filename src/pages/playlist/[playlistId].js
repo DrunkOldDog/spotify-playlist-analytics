@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Container, Heading, Text } from "@chakra-ui/react";
 import { playlistsState } from "@lib/recoil";
 import { getTracks } from "@lib/spotify";
 import { getSession } from "next-auth/react";
@@ -31,7 +31,7 @@ export default function Playlist({ tracks }) {
   }, []);
 
   return (
-    <Box>
+    <Container pt={8}>
       <Heading>{playlist.name}</Heading>
       <Text>{playlist.description}</Text>
 
@@ -43,7 +43,7 @@ export default function Playlist({ tracks }) {
           </li>
         ))}
       </ul>
-    </Box>
+    </Container>
   );
 }
 
