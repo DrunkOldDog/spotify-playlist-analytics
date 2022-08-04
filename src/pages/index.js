@@ -3,12 +3,21 @@ import { Container, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import { Navbar } from "@layout/Navbar";
 import { useSession, signIn, signOut, getSession } from "next-auth/react";
 import { getPlaylists } from "@lib/spotify";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { GlobalPropTypes } from "@common/constants";
 import { PlaylistCard } from "@components/PlaylistCard";
+import { useRecoilState } from "recoil";
+import { playlistsState } from "@lib/recoil";
 
-function Home({ playlists }) {
+function Home({ playlists: initialPlaylists }) {
   const { data } = useSession();
+  const [playlists, setPlaylists] = useRecoilState(playlistsState);
+
+  useEffect(() => {
+    if (initialPlaylists.length) {
+      setPlaylists(initialPlaylists);
+    }
+  }, [initialPlaylists]);
 
   const userPlaylists = useMemo(() => {
     if (!data?.user) return playlists;
