@@ -2,6 +2,10 @@ import { Box, SimpleGrid, Image, Heading, Text } from "@chakra-ui/react";
 import { GlobalPropTypes } from "@common/constants";
 
 export const PlaylistsGrid = ({ playlists }) => {
+  if (!playlists.length) {
+    return <Text>No playlists were found.</Text>;
+  }
+
   return (
     <SimpleGrid columns={[2, 2, 4]} gap={4}>
       {playlists.map((playlist) => (
