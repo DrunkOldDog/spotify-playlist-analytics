@@ -7,4 +7,12 @@ export const GlobalPropTypes = {
     image: PropTypes.string,
     name: PropTypes.string,
   }),
+  playlists: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string,
+      images: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })),
+    })
+  ),
 };

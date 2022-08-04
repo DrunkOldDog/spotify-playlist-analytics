@@ -1,16 +1,10 @@
-import PropTypes from "prop-types";
-import {
-  Box,
-  Container,
-  Heading,
-  SimpleGrid,
-  Image,
-  Text,
-} from "@chakra-ui/react";
+import { Container, Heading } from "@chakra-ui/react";
 import { Navbar } from "@layout/Navbar";
 import { useSession, signIn, signOut, getSession } from "next-auth/react";
 import { getPlaylists } from "@lib/spotify";
 import { useMemo } from "react";
+import { GlobalPropTypes } from "@common/constants";
+import { PlaylistsGrid } from "@components/PlaylistsGrid";
 
 function Home({ playlists }) {
   const { data } = useSession();
@@ -28,33 +22,7 @@ function Home({ playlists }) {
           Your playlists
         </Heading>
 
-        <SimpleGrid columns={[2, 2, 4]} gap={4}>
-          {userPlaylists.map((playlist) => (
-            <Box
-              key={playlist.id}
-              maxW="xs"
-              borderWidth="1px"
-              borderRadius="lg"
-              overflow="hidden"
-              mb={10}
-              minH={[240, 340, 280, 320]}
-            >
-              <Image
-                src={playlist.images[0]?.url}
-                alt={playlist.name}
-                height={[160, 260, 200, 240]}
-                width="100%"
-                objectFit="cover"
-              />
-              <Box p={2}>
-                <Heading as="h4" size={"md"} noOfLines={1}>
-                  {playlist.name}
-                </Heading>
-                <Text noOfLines={2}>{playlist.description}</Text>
-              </Box>
-            </Box>
-          ))}
-        </SimpleGrid>
+        <PlaylistsGrid playlists={userPlaylists} />
       </Container>
     </>
   );
@@ -69,12 +37,5 @@ export async function getServerSideProps(context) {
 export default Home;
 
 Home.propTypes = {
-  playlists: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string,
-      images: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })),
-    })
-  ),
+  playlists: GlobalPropTypes.playlists,
 };
