@@ -1,5 +1,8 @@
+import PropTypes from "prop-types";
 import { Box, Heading, Text } from "@chakra-ui/react";
 import { playlistsState } from "@lib/recoil";
+import { getTracks } from "@lib/spotify";
+import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { atom, selector, useRecoilValue, useSetRecoilState } from "recoil";
@@ -16,14 +19,14 @@ const currentPlaylist = selector({
   },
 });
 
-export default function Playlist() {
+export default function Playlist({ tracks }) {
   const { query } = useRouter();
   const playlist = useRecoilValue(currentPlaylist);
   const setCurrentPlaylistId = useSetRecoilState(currentPlaylistId);
 
   useEffect(() => {
-    if (query.id) {
-      setCurrentPlaylistId(query.id);
+    if (query.playlistId) {
+      setCurrentPlaylistId(query.playlistId);
     }
   }, []);
 
@@ -31,6 +34,26 @@ export default function Playlist() {
     <Box>
       <Heading>{playlist.name}</Heading>
       <Text>{playlist.description}</Text>
+
+      <Heading>Tracks</Heading>
+      <ul>
+        {tracks.map(({ track }) => (
+          <li key={track.name}>
+            {track.name} - {track.artists.map(({ name }) => name).join(", ")}
+          </li>
+        ))}
+      </ul>
     </Box>
   );
 }
+
+export async function getServerSideProps(context) {
+  const { playlistId } = context.query;
+  const session = await getSession({ req: context.req });
+  const tracks = await getTracks(session?.refreshToken, playlistId);
+  return { props: { tracks } };
+}
+
+Playlist.propTypes = {
+  tracks: PropTypes.arrayOf(PropTypes.object),
+};
