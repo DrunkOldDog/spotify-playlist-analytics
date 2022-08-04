@@ -1,10 +1,11 @@
-import { Container, Heading } from "@chakra-ui/react";
+import PropTypes from "prop-types";
+import { Container, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import { Navbar } from "@layout/Navbar";
 import { useSession, signIn, signOut, getSession } from "next-auth/react";
 import { getPlaylists } from "@lib/spotify";
 import { useMemo } from "react";
 import { GlobalPropTypes } from "@common/constants";
-import { PlaylistsGrid } from "@components/PlaylistsGrid";
+import { PlaylistCard } from "@components/PlaylistCard";
 
 function Home({ playlists }) {
   const { data } = useSession();
@@ -22,7 +23,15 @@ function Home({ playlists }) {
           Your playlists
         </Heading>
 
-        <PlaylistsGrid playlists={userPlaylists} />
+        {userPlaylists.length ? (
+          <SimpleGrid columns={[2, 2, 4]} gap={4}>
+            {userPlaylists.map((playlist) => (
+              <PlaylistCard key={playlist.id} playlist={playlist} />
+            ))}
+          </SimpleGrid>
+        ) : (
+          <Text>No playlists were found.</Text>
+        )}
       </Container>
     </>
   );
@@ -37,5 +46,5 @@ export async function getServerSideProps(context) {
 export default Home;
 
 Home.propTypes = {
-  playlists: GlobalPropTypes.playlists,
+  playlists: PropTypes.arrayOf(GlobalPropTypes.playlist),
 };
