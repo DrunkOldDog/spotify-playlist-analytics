@@ -7,17 +7,17 @@ import PropTypes from "prop-types";
 
 export const Navbar = ({ user, signIn, signOut }) => {
   return (
-    <NavigationBar height={{ sm: "54px", lg: "80px" }}>
+    <NavigationBar height={{ base: "54px", lg: "80px" }}>
       <Container height={"100%"}>
         <Flex
           justifyContent={"space-between"}
           alignItems="center"
           height="100%"
         >
-          <Spotify fill="#fff" height={{ sm: "26px", lg: "40px" }} />
+          <Spotify fill="#fff" height={{ base: "26px", lg: "40px" }} />
           {!user ? (
             <Button
-              size={{ sm: "sm", lg: "md" }}
+              size={{ base: "sm", lg: "md" }}
               onClick={() => signIn("spotify")}
             >
               Log In

@@ -18,5 +18,10 @@ export const theme = extendTheme({
         colorScheme: "spotify",
       },
     },
+    Container: {
+      baseStyle: {
+        maxWidth: 1024,
+      },
+    },
   },
 });

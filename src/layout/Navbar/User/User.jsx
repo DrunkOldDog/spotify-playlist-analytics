@@ -22,7 +22,7 @@ export const User = ({ user, onLogout }) => (
           <Avatar
             name={user.name}
             src={user.image}
-            size={{ sm: "sm", lg: "md" }}
+            size={{ base: "sm", lg: "md" }}
           />
         </WrapItem>
         <Hide below="lg">
