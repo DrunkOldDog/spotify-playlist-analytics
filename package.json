@@ -28,6 +28,7 @@
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-table": "^7.8.0",
     "recoil": "^0.7.4"
   }
 }
