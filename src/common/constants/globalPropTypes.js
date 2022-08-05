@@ -13,4 +13,14 @@ export const GlobalPropTypes = {
     description: PropTypes.string,
     images: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })),
   }),
+  track: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    popularity: PropTypes.number.isRequired,
+    album: PropTypes.shape({
+      images: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })),
+      name: PropTypes.string,
+      release_date: PropTypes.string,
+    }),
+    artists: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string })),
+  }),
 };
