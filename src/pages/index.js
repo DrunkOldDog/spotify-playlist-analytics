@@ -15,20 +15,13 @@ function Home({ playlists: initialPlaylists }) {
 
   useEffect(() => {
     if (initialPlaylists.length) {
-      const playlistsHash = initialPlaylists.reduce((acc, cur) => {
-        acc[cur.id] = cur;
-        return acc;
-      }, {});
-      setPlaylists(playlistsHash);
+      setPlaylists(initialPlaylists);
     }
   }, [initialPlaylists]);
 
   const userPlaylists = useMemo(() => {
-    const playlistsArray = Object.values(playlists);
-    if (!data?.user) return playlistsArray;
-    return playlistsArray.filter(
-      (playlist) => playlist.owner.id === data.user.id
-    );
+    if (!data?.user) return playlists;
+    return playlists.filter((playlist) => playlist.owner.id === data.user.id);
   }, [playlists, data]);
 
   return (

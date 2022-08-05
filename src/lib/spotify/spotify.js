@@ -36,14 +36,31 @@ export const getPlaylists = async (refreshToken) => {
   return data?.items || [];
 };
 
-export const getTracks = async (refreshToken, playlistId) => {
+export const getSpecificPlaylist = async (refreshToken, playlistId) => {
   if (!refreshToken) return [];
   const accessToken = await refreshAccessToken(refreshToken);
-  const { data } = await getData(SERVER.SPOTIFY_PLAYLIST_TRACKS(playlistId), {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  const { data: playlist } = await getData(
+    SERVER.SPOTIFY_PLAYLIST(playlistId),
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+  return playlist;
+};
+
+export const getTracks = async (refreshToken, playlistId, offset = 0) => {
+  if (!refreshToken) return [];
+  const accessToken = await refreshAccessToken(refreshToken);
+  const { data } = await getData(
+    SERVER.SPOTIFY_PLAYLIST_TRACKS(playlistId) + `?offset=${offset}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
 
   return data?.items || [];
 };

@@ -6,6 +6,10 @@ export const SERVER = {
   SPOTIFY_AUTHORIZE: `${SPOTIFY_ACCOUNTS_API}/authorize`,
   SPOTIFY_TOKEN: `${SPOTIFY_ACCOUNTS_API}/api/token`,
   SPOTIFY_PLAYLISTS: `${SPOTIFY_API}/me/playlists`,
+  SPOTIFY_PLAYLIST: (playlistId) => `${SPOTIFY_API}/playlists/${playlistId}`,
   SPOTIFY_PLAYLIST_TRACKS: (playlistId) =>
     `${SPOTIFY_API}/playlists/${playlistId}/tracks`,
+
+  /* API Routes */
+  PLAYLIST_TRACKS: "/api/playlists/tracks",
 };

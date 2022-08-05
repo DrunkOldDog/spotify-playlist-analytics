@@ -14,19 +14,20 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import { getTracks } from "@lib/spotify";
+import { getSpecificPlaylist } from "@lib/spotify";
 import { getSession } from "next-auth/react";
 import { usePlaylist } from "@hooks/usePlaylist";
+import { GlobalPropTypes } from "@common/constants";
 
-export default function Playlist({ tracks: initialTracks }) {
-  const { playlist, tracks } = usePlaylist(initialTracks);
+export default function Playlist({ currentPlaylist }) {
+  const { tracks } = usePlaylist(currentPlaylist);
 
   return (
     <Container pt={8}>
-      {playlist && (
+      {currentPlaylist && (
         <>
-          <Heading>{playlist.name}</Heading>
-          <Text>{playlist.description}</Text>
+          <Heading>{currentPlaylist.name}</Heading>
+          <Text>{currentPlaylist.description}</Text>
         </>
       )}
 
@@ -80,10 +81,14 @@ export default function Playlist({ tracks: initialTracks }) {
 export async function getServerSideProps(context) {
   const { playlistId } = context.query;
   const session = await getSession({ req: context.req });
-  const tracks = await getTracks(session?.refreshToken, playlistId);
-  return { props: { tracks } };
+  const currentPlaylist = await getSpecificPlaylist(
+    session?.refreshToken,
+    playlistId
+  );
+  return { props: { currentPlaylist } };
 }
 
 Playlist.propTypes = {
   tracks: PropTypes.arrayOf(PropTypes.object),
+  currentPlaylist: GlobalPropTypes.playlist,
 };
