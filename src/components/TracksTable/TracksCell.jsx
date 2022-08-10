@@ -9,11 +9,16 @@ export const TrackCell = ({ row }) => (
       alt={row.original.album.name}
       height={12}
     />
-    <Box>
-      <Text fontWeight={"bold"} fontSize="sm">
+    <Box maxW={"100%"} pr={8}>
+      <Text
+        fontWeight={"bold"}
+        fontSize="sm"
+        textOverflow="ellipsis"
+        overflow={"hidden"}
+      >
         {row.original.name}
       </Text>
-      <Text fontSize={"sm"}>
+      <Text fontSize={"sm"} textOverflow="ellipsis" overflow={"hidden"}>
         {row.original.artists.map(({ name }) => name).join(", ")}
       </Text>
     </Box>

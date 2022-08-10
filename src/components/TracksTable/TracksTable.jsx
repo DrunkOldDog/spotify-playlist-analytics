@@ -36,9 +36,10 @@ export const TracksTable = ({ tracks }) => {
                         <CaretDown
                           fill="#586274"
                           transform={"rotate(180deg)"}
+                          display="inline-block"
                         />
                       ) : (
-                        <CaretDown fill="#586274" />
+                        <CaretDown fill="#586274" display="inline-block" />
                       )
                     ) : null}
                   </chakra.span>
@@ -48,7 +49,7 @@ export const TracksTable = ({ tracks }) => {
           ))}
         </Thead>
         <Tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
+          {rows.map((row, rowInd) => {
             prepareRow(row);
             return (
               <Tr key={row.id} {...row.getRowProps()}>
@@ -57,8 +58,11 @@ export const TracksTable = ({ tracks }) => {
                     key={cell.row.id}
                     {...cell.getCellProps()}
                     isNumeric={cell.column.isNumeric}
+                    maxWidth={"300px"}
                   >
-                    {cell.render("Cell")}
+                    {cell.column.id === "index"
+                      ? ++rowInd
+                      : cell.render("Cell")}
                   </Td>
                 ))}
               </Tr>
