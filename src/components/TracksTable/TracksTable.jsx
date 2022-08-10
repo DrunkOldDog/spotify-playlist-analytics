@@ -58,7 +58,7 @@ export const TracksTable = ({ tracks }) => {
                     key={cell.row.id}
                     {...cell.getCellProps()}
                     isNumeric={cell.column.isNumeric}
-                    maxWidth={"300px"}
+                    maxWidth={"280px"}
                   >
                     {cell.column.id === "index"
                       ? ++rowInd

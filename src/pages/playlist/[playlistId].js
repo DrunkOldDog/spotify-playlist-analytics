@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import {
+  Box,
   Container,
   Flex,
   Heading,
@@ -39,7 +40,9 @@ export default function Playlist({ currentPlaylist }) {
         </InputGroup>
       </Flex>
 
-      <TracksTable tracks={filteredTracks} />
+      <Box maxH={560} overflowY="auto" my={8}>
+        <TracksTable tracks={filteredTracks} />
+      </Box>
     </Container>
   );
 }
