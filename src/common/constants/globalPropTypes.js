@@ -12,6 +12,13 @@ export const GlobalPropTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string,
     images: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })),
+    public: PropTypes.bool,
+    followers: PropTypes.shape({
+      total: PropTypes.number,
+    }),
+    tracks: PropTypes.shape({
+      total: PropTypes.number,
+    }),
   }),
   track: PropTypes.shape({
     name: PropTypes.string.isRequired,
