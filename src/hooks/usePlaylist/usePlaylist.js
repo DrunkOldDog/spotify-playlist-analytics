@@ -1,6 +1,6 @@
 import { getData, SERVER } from "@common/server";
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { atom, selector, useRecoilState } from "recoil";
 
 const tracksState = atom({
@@ -20,7 +20,7 @@ const trackItems = selector({
   },
 });
 
-export const usePlaylist = (currentPlaylist) => {
+export const usePlaylist = (currentPlaylist, searchTerm) => {
   const { data: session } = useSession();
   const [tracks, setTracksState] = useRecoilState(tracksState);
   const [tracksList, setTracksList] = useRecoilState(trackItems);
@@ -50,5 +50,15 @@ export const usePlaylist = (currentPlaylist) => {
     }
   }, [tracks, session]);
 
-  return { tracks: tracksList };
+  const filteredTracks = useMemo(() => {
+    if (!searchTerm || !tracksList.length) {
+      return tracksList;
+    }
+
+    return tracksList.filter(({ track }) => {
+      return track.name.toLowerCase().includes(searchTerm.toLowerCase());
+    });
+  }, [tracksList, searchTerm]);
+
+  return { tracks: tracksList, filteredTracks };
 };

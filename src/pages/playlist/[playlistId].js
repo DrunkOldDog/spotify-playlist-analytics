@@ -1,21 +1,45 @@
 import PropTypes from "prop-types";
-import { Container, Heading } from "@chakra-ui/react";
+import {
+  Container,
+  Flex,
+  Heading,
+  Input,
+  InputGroup,
+  InputLeftElement,
+} from "@chakra-ui/react";
 import { getSpecificPlaylist } from "@lib/spotify";
 import { getSession } from "next-auth/react";
 import { usePlaylist } from "@hooks/usePlaylist";
 import { GlobalPropTypes } from "@common/constants";
 import { TracksTable } from "@components/TracksTable";
 import { PlaylistHeader } from "@components/PlaylistHeader";
+import { Search } from "@assets/icons";
+import { useDeferredValue, useState } from "react";
 
 export default function Playlist({ currentPlaylist }) {
-  const { tracks } = usePlaylist(currentPlaylist);
+  const [searchTerm, setSearchTerm] = useState("");
+  const deferredSearchTerm = useDeferredValue(searchTerm, { timeout: 1000 });
+  const { filteredTracks } = usePlaylist(currentPlaylist, deferredSearchTerm);
 
   return (
     <Container pt={8}>
       {currentPlaylist && <PlaylistHeader playlist={currentPlaylist} />}
 
-      <Heading>Tracks</Heading>
-      <TracksTable tracks={tracks} />
+      <Flex justify={"space-between"} align="center">
+        <Heading>Tracks</Heading>
+        <InputGroup maxW={56}>
+          <InputLeftElement pointerEvents={"none"}>
+            <Search />
+          </InputLeftElement>
+          <Input
+            placeholder="Search track name in the playlist"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </InputGroup>
+      </Flex>
+
+      <TracksTable tracks={filteredTracks} />
     </Container>
   );
 }
