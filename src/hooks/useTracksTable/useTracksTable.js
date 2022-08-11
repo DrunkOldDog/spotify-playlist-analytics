@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
 import { TrackCell } from "@components/TracksTable";
+import { PopularityCell } from "@components/TracksTable/PopularityCell";
 
 export const useTracksTable = (tracks) => {
   const data = useMemo(
@@ -32,6 +33,7 @@ export const useTracksTable = (tracks) => {
         Header: "Popularity",
         accessor: "popularity",
         isNumeric: true,
+        Cell: PopularityCell,
       },
       {
         Header: "Release Date",
