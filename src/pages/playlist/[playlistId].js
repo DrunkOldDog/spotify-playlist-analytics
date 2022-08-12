@@ -16,6 +16,7 @@ import { TracksTable } from "@components/TracksTable";
 import { PlaylistHeader } from "@components/PlaylistHeader";
 import { Search } from "@assets/icons";
 import { useDeferredValue, useState } from "react";
+import Head from "next/head";
 
 export default function Playlist({ currentPlaylist }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -24,6 +25,10 @@ export default function Playlist({ currentPlaylist }) {
 
   return (
     <Container pt={8}>
+      <Head>
+        <title>{currentPlaylist.name} Analytics</title>
+      </Head>
+
       {currentPlaylist && <PlaylistHeader playlist={currentPlaylist} />}
 
       <Flex justify={"space-between"} align="center">

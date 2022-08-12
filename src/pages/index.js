@@ -8,6 +8,7 @@ import { PlaylistCard } from "@components/PlaylistCard";
 import { useRecoilState } from "recoil";
 import { playlistsState } from "@lib/recoil";
 import Link from "next/link";
+import Head from "next/head";
 
 function Home({ playlists: initialPlaylists }) {
   const { data } = useSession();
@@ -26,6 +27,10 @@ function Home({ playlists: initialPlaylists }) {
 
   return (
     <Container pt={8}>
+      <Head>
+        <title>Spotify Analytics</title>
+      </Head>
+
       <Heading as="h1" mb={8}>
         Your playlists
       </Heading>

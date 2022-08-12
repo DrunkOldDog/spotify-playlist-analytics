@@ -4,8 +4,11 @@ import { Spotify } from "@assets/icons";
 import { User } from "./User";
 import { GlobalPropTypes } from "@common/constants";
 import PropTypes from "prop-types";
+import { useRouter } from "next/router";
 
 export const Navbar = ({ user, signIn, signOut }) => {
+  const { push } = useRouter();
+
   return (
     <NavigationBar height={{ base: "54px", lg: "80px" }}>
       <Container height={"100%"}>
@@ -14,7 +17,9 @@ export const Navbar = ({ user, signIn, signOut }) => {
           alignItems="center"
           height="100%"
         >
-          <Spotify fill="#fff" height={{ base: "26px", lg: "40px" }} />
+          <Box cursor={"pointer"} onClick={() => push("/")}>
+            <Spotify fill="#fff" height={{ base: "26px", lg: "40px" }} />
+          </Box>
           {!user ? (
             <Button
               size={{ base: "sm", lg: "md" }}
