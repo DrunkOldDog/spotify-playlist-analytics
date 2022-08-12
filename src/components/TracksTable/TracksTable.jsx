@@ -1,3 +1,4 @@
+import React from "react";
 import PropTypes from "prop-types";
 import {
   Table,
@@ -13,7 +14,7 @@ import { GlobalPropTypes } from "@common/constants";
 import { useTracksTable } from "@hooks/useTracksTable";
 import { CaretDown } from "@assets/icons";
 
-export const TracksTable = ({ tracks }) => {
+export const TracksTable = React.memo(({ tracks }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTracksTable(tracks);
 
@@ -72,8 +73,9 @@ export const TracksTable = ({ tracks }) => {
       </Table>
     </TableContainer>
   );
-};
+});
 
+TracksTable.displayName = "TracksTable";
 TracksTable.propTypes = {
   tracks: PropTypes.arrayOf(PropTypes.shape({ track: GlobalPropTypes.track }))
     .isRequired,

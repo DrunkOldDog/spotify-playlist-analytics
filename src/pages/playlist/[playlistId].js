@@ -19,7 +19,7 @@ import { useDeferredValue, useState } from "react";
 
 export default function Playlist({ currentPlaylist }) {
   const [searchTerm, setSearchTerm] = useState("");
-  const deferredSearchTerm = useDeferredValue(searchTerm, { timeout: 1000 });
+  const deferredSearchTerm = useDeferredValue(searchTerm);
   const { filteredTracks } = usePlaylist(currentPlaylist, deferredSearchTerm);
 
   return (
