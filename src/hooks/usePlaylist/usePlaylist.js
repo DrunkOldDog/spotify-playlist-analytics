@@ -1,4 +1,5 @@
 import { getData, SERVER } from "@common/server";
+import { filterBySearch } from "@common/utils/filterBySearch";
 import { useSession } from "next-auth/react";
 import { useEffect, useMemo } from "react";
 import { atom, selector, useRecoilState } from "recoil";
@@ -55,9 +56,7 @@ export const usePlaylist = (currentPlaylist, searchTerm) => {
       return tracksList;
     }
 
-    return tracksList.filter(({ track }) => {
-      return track.name.toLowerCase().includes(searchTerm.toLowerCase());
-    });
+    return tracksList.filter(({ track }) => filterBySearch(track, searchTerm));
   }, [tracksList, searchTerm]);
 
   return { tracks: tracksList, filteredTracks };
