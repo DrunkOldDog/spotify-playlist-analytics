@@ -43,5 +43,5 @@ export const useTracksTable = (tracks) => {
     []
   );
 
-  return useTable({ columns, data }, useSortBy);
+  return useTable({ columns, data, autoResetSortBy: false }, useSortBy);
 };
