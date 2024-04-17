@@ -5,6 +5,12 @@ import { Navbar } from ".";
 
 const signIn = jest.fn();
 
+jest.mock("next/router", () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+  }),
+}));
+
 describe("Navbar component", () => {
   test("should render", () => {
     render(<Navbar />);
